@@ -15,5 +15,7 @@ type Server struct {
 func (s *Server) App() (http.Handler, error) {
 	mux := http.NewServeMux()
 	assets.AddHandlers(mux)
+	mux.HandleFunc("/guide.html", s.GuideHandler)
+	mux.HandleFunc("/podquiz.css", s.StylesheetHandler)
 	return mux, nil
 }

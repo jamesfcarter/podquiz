@@ -1,0 +1,249 @@
+{{$sidebar_width := "192px"}}
+{{$sidebar_pad := "8px"}}
+{{$page_pad := "6px"}}
+{{$sidebar_width_plus_page_pad_plus_sidebar_pad := "206px"}}
+{{$sidebar_border := "5px"}}
+{{$commentform_width := "25em"}}
+{{$commentform_width_minus_eight := "17em"}}
+{{$commentform_width_halved := "12em"}}
+{{$yellow := "#ffffcc"}}
+{{$brown := "#996633"}}
+{{$black := "#000000"}}
+{{$blue := "#0000ff"}}
+{{$red := "#0000ff"}}
+{{$font := "'Droid Sans', sans-serif"}}
+{{$brownbox := "border: {\nstyle: solid;\nwidth: 3px;\ncolor: #000000;\n}\n-moz-border-radius: 20px;\n-webkit-border-radius: 20px;\n-khtml-border-radius: 20px;\nborder-radius: 20px;\nbehavior: url(/css/PIE.htc);\na:link, a:visited, a:hover {\ncolor: #ffffcc;\n}\ncolor: #ffffcc\nbackground-color: #996633\n"}}
+
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+* {  
+  margin: 0;  
+  padding: 0;  
+} 
+
+header, footer, aside, nav, article {  
+  display: block;  
+}
+
+h1 {
+  font: {
+    size: 200%;
+    weight: bold;
+  }
+  text: {
+      align: center;
+      decoration: underline;
+  }
+  padding: {
+    top: 0.5em;
+    bottom: 0.5em;
+  }
+}
+
+h2, h3 {
+  padding: {
+    top: 0.5em;
+  }
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 120%
+}
+
+h3 {
+  font-size: 100%
+}
+
+
+p {
+  padding: {
+    top: 0.5em;
+    bottom: 0.5em;
+  }
+}
+
+img {
+  border-width: 0;
+}
+
+.podquiz {
+  color: {{$black}};
+  background-color: {{$yellow}};
+  font-family: {{$font}};
+  a:link {
+    background: transparent;
+    color: {{$blue}};
+    text-decoration: none;
+  }
+  a:hover {
+    background: transparent;
+    color: {{$blue}};
+    text-decoration: underline;
+  }
+  a:visited {
+    background: transparent;
+    color: {{$red}};
+    text-decoration: none;
+  }
+}
+
+section.social {
+  height: 3em;
+  div {
+    float: left;
+    height: 25px;
+  }
+  .facebook {
+    width: 90px;
+  }
+  .plusone {
+    width: 120px;
+  }
+  .comdate {
+    padding-right: 1em;
+    font-size: 80%;
+  }
+}
+
+article.quiz {
+  clear: both;
+  padding-bottom: 1em;
+  section.player {
+    {{$brownbox}}
+    float:right;
+    text-align: center;
+    padding: {
+      left: 4px;
+    }
+    margin: {
+      left: 1em;
+      right: 4px;
+    }
+  }
+  p.description {
+    br {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+section.comments {
+  br {
+      display: block;
+      margin-bottom: 0.5em;
+  }
+  section.comment {
+    p.date {
+      font-size: 80%;
+      padding: 0;
+    }
+  }
+
+  .commentform {
+    margin: auto;
+    width: {{$commentform_width}};
+    {{$brownbox}}
+    padding: {
+    top: 1em;
+    bottom: 1em;
+    }
+    text-align: center;
+    input {
+      color: {{$black}};
+      background-color: {{$yellow}};
+    }
+    input.name {
+      width: {{$commentform_width_minus_eight}};
+    }
+    input.submit {
+      color: {{$yellow}};
+      background-color: {{$brown}};
+    }
+    input.human {
+      width: 3em;
+    }
+    textarea {
+      color: {{$black}};
+      background-color: {{$yellow}};
+      width: {{$commentform_width}};
+      height: {{$commentform_width_halved}};
+    }
+  }
+}
+
+footer {
+  clear: both;
+  img.logo {
+    float: right;
+    border: 0;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0 0 0 {{$sidebar_width_plus_page_pad_plus_sidebar_pad}};
+}
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: {{$page_pad}};
+  width: {{$sidebar_width}};
+  height: 100%;
+  text-align: center;
+  a:link, a:visited, a:hover {
+    color: {{$black}};
+  }
+  header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .hpodquiz {
+      font-size: 150%
+    }
+    .htagline {
+      font-size: 105%
+    }
+  }
+  section.box {
+    {{$brownbox}}
+    font-weight: bolder;
+    margin: {
+      top: 5px;
+      bottom: 5px;
+    }
+    padding: {
+      top: 3px;
+      bottom: 3px;
+    }
+  }
+}
+@media screen {
+  body > nav.sidebar {
+    position:fixed;
+  }
+}
+/*
+* html body {
+  overflow: hidden;
+}
+* html section.content {
+  height: 100%;
+  overflow: auto;
+}
+*/
+
+.content {
+  padding-right: {{$page_pad}};
+}
+
+span.quizlink {
+  float: left;
+  display: block;
+  width: 11em;
+}
+
+span.small {
+    font-size: 80%;
+}
+

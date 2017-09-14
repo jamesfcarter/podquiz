@@ -1,7 +1,6 @@
 package assets
 
 import (
-	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -14,7 +13,6 @@ func AddHandlers(mux *http.ServeMux) {
 		if !staticAsset(name) {
 			continue
 		}
-		log.Printf("%s: %s", name, webPath(name))
 		mux.HandleFunc(webPath(name), AssetWriterFunc(name))
 	}
 }

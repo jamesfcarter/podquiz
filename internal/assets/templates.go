@@ -18,7 +18,8 @@ type Templates map[string]*template.Template
 func MakeTemplates() (*Templates, error) {
 	result := make(Templates)
 	for name, tmpl := range map[string]string{
-		"guide": withLayout("guide"),
+		"guide":      withLayout("guide"),
+		"stylesheet": stringAsset("stylesheet"),
 	} {
 		t, err := template.New(name).Funcs(templateFuncs).Parse(tmpl)
 		if err != nil {

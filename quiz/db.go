@@ -21,7 +21,7 @@ type Database struct {
 }
 
 // New returns a newly initialized database loaded from dir
-func New(dir string) *Database {
+func NewDatabase(dir string) *Database {
 	d := &Database{
 		Dir:   dir,
 		Cache: make(map[int]*Episode),
