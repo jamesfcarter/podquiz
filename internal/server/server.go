@@ -1,7 +1,9 @@
 package server
 
 import (
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/jamesfcarter/podquiz/internal/assets"
 	"github.com/jamesfcarter/podquiz/quiz"
@@ -10,6 +12,15 @@ import (
 type Server struct {
 	Database *quiz.Database
 	Template *assets.Templates
+}
+
+func Log(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		handler.ServeHTTP(w, r)
+		elapsed := time.Since(start)
+		log.Printf("%s %s %s", r.Method, r.URL, elapsed)
+	})
 }
 
 func (s *Server) App() (http.Handler, error) {
@@ -27,5 +38,5 @@ func (s *Server) App() (http.Handler, error) {
 	mux.HandleFunc("/podquiz.rss", s.RSSHandler)
 	mux.HandleFunc("/rss.php", s.RSSHandler)
 	mux.HandleFunc("/", s.IndexHandler)
-	return mux, nil
+	return Log(mux), nil
 }
