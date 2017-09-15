@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/mail"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -158,5 +159,26 @@ func (q *Episode) ReadComments(r io.Reader) error {
 		}
 	}
 	q.Comments = comments
+	return nil
+}
+
+// AddComment adds the given comment to the on-disc database and to
+// the in-memory copy
+func (q *Episode) AddComment(dir string, c Comment) error {
+	f, err := os.OpenFile(q.CommentsFilename(dir), os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return err
+	}
+	str := c.Time.Format("Mon, 2 Jan 2006 15:04:05 -0700") + "\n" + c.Author + "\n" + c.Comment + "\n.\n"
+	_, err = f.WriteString(str)
+	if err != nil {
+		f.Close()
+		return err
+	}
+	err = f.Close()
+	if err != nil {
+		return err
+	}
+	q.Comments = append(q.Comments, c)
 	return nil
 }

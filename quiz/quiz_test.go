@@ -1,6 +1,9 @@
 package quiz_test
 
 import (
+	"io/ioutil"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -111,5 +114,47 @@ This is another test.
 	}
 	if quiz.Comments[1].Comment != "This is another test.\n" {
 		t.Errorf("bad comment 2 %s", quiz.Comments[1].Comment)
+	}
+}
+
+func TestAddComment(t *testing.T) {
+	dir, err := ioutil.TempDir("", "pqtest")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(dir)
+	loc, err := time.LoadLocation("")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fn := filepath.Join(dir, "42.comments")
+	err = ioutil.WriteFile(fn, []byte("hello\n"), 0644)
+	if err != nil {
+		t.Fatal(err)
+	}
+	q := &quiz.Episode{
+		Number: 42,
+	}
+	c := quiz.Comment{
+		Time:    time.Date(1974, 8, 5, 0, 0, 0, 0, loc),
+		Author:  "fred",
+		Comment: "test\ncomment",
+	}
+	err = q.AddComment(dir, c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(q.Comments) != 1 {
+		t.Fatal("comment not added")
+	}
+	if q.Comments[0].Author != "fred" {
+		t.Errorf("unexpected name %s", q.Comments[0].Author)
+	}
+	contents, err := ioutil.ReadFile(fn)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(contents) != "hello\nMon, 5 Aug 1974 00:00:00 +0000\nfred\ntest\ncomment\n.\n" {
+		t.Errorf("unexpected comments file contents: %s", string(contents))
 	}
 }

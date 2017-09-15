@@ -19,8 +19,10 @@ type IndexTemplateData struct {
 }
 
 type QuizTemplateData struct {
-	PageTitle string
-	Quiz      *quiz.Episode
+	PageTitle   string
+	CommentName string
+	Comment     string
+	Quiz        *quiz.Episode
 }
 
 type RSSTemplateData struct {

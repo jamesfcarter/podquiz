@@ -1,6 +1,7 @@
 {{define "content"}}
 {{with .Quiz}}
 <h1>{{.Name}}</h1>
+<article class='quiz'>
 {{template "player" .}}
 <p class='description'>{{.DescriptionHTML}}</p>
 <section class='comments'>
@@ -12,18 +13,19 @@
     <p>{{.HTML}}</p>
   </section>
   {{end}}
+{{end}}
   <div class='commentform'>
     <form action='comment' method='post'>
-      <input name='q' type='hidden' value='650'>
+      <input name='q' type='hidden' value='{{.Quiz.Number}}'>
       <span class='label'>Name:</span>&nbsp;
-      <input class='name' name='name' type='text'><br>
+      <input class='name' name='name' type='text' value='{{.CommentName}}'><br>
       <span class='label'>Comment:</span><br>
-      <textarea name='comment'></textarea><br>
+      <textarea name='comment'>{{.Comment}}</textarea><br>
       <span class='label'>Episode number <small>(see above)</small>:</span>
       <input class='human' name='human' type='text' value=''><br>
       <input class='submit' name='submit' type='submit' value='Submit Comment'>
     </form>
   </div>
 </section>
-{{end}}
+</article>
 {{end}}
