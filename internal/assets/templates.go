@@ -78,6 +78,7 @@ func assetName(tmpl string) string {
 var templateFuncs template.FuncMap = template.FuncMap{
 	"rssTime":   timeFormat(rssTimeFormat),
 	"indexTime": timeFormat(indexTimeFormat),
+	"xml":       xml,
 }
 
 const (
@@ -89,4 +90,8 @@ func timeFormat(fmt string) func(t time.Time) template.HTML {
 	return func(t time.Time) template.HTML {
 		return template.HTML(t.Format(fmt))
 	}
+}
+
+func xml() template.HTML {
+	return template.HTML(`<?xml version="1.0"?>`)
 }

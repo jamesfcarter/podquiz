@@ -24,6 +24,7 @@ func (s *Server) App() (http.Handler, error) {
 	mux.HandleFunc("/quiz.php", s.QuizHandler)
 	mux.HandleFunc("/podquiz.css", s.StylesheetHandler)
 	mux.HandleFunc("/podquiz.rss", s.RSSHandler)
+	mux.HandleFunc("/rss.php", s.RSSHandler)
 	mux.HandleFunc("/", s.IndexHandler)
 	return mux, nil
 }
