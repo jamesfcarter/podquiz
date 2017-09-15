@@ -9,3 +9,6 @@ test: bindata fmt
 
 build:  bindata
 	go build github.com/jamesfcarter/podquiz/cmd/podquiz
+
+run: build
+	./podquiz
