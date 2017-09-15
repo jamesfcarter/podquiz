@@ -40,6 +40,7 @@ func MakeTemplates() (*Templates, error) {
 	for name, tmpl := range map[string]string{
 		"index":      withLayout("index"),
 		"quiz":       withLayout("quiz"),
+		"archive":    withLayout("archive"),
 		"guide":      withLayout("guide"),
 		"stylesheet": stringAsset("stylesheet"),
 		"rss":        stringAsset("rss"),

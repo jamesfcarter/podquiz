@@ -1,0 +1,10 @@
+{{define "content"}}
+<h1>PodQuiz Archive</h1>
+<section>
+{{range .Quizzes}}
+<span class='quizlink'>
+  <a href='{{.SiteURL false}}'>{{.Name}}</a>
+</span>
+{{end}}
+</section>
+{{end}}

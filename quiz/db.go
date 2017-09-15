@@ -68,6 +68,12 @@ func (d *Database) Page(first, size int) []*Episode {
 	return result
 }
 
+// All returns an array of all quizzes, newest first
+func (d *Database) All() []*Episode {
+	mr := d.MostRecent()
+	return d.Page(mr, mr)
+}
+
 // Update reconciles any changes made on the on-disc database with the cached
 // copy.
 func (d *Database) Update() error {
