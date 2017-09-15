@@ -17,6 +17,10 @@ func (s *Server) RenderCSS(w http.ResponseWriter, template string, data interfac
 	s.render(w, "text/css", template, data)
 }
 
+func (s *Server) RenderRSS(w http.ResponseWriter, template string, data interface{}) {
+	s.render(w, "application/rss+xml", template, data)
+}
+
 func (s *Server) RenderSass(w http.ResponseWriter, template string, data interface{}) {
 	var wg sync.WaitGroup
 	rdr, wtr := io.Pipe()

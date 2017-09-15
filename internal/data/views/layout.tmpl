@@ -28,6 +28,13 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
       })();
     </script>
+
+    <script src="/audiojs/audio.min.js"></script>
+    <script>
+      audiojs.events.ready(function() {
+        var as = audiojs.createAll();
+      });
+    </script>
     <nav class='sidebar'>
       <header>
         <a href='/'>
@@ -90,3 +97,9 @@
     </section>
   </body>
 </html>
+{{define "player"}}
+<section class='player'>
+  <p><a href='{{.URL}}'>{{.MP3}}</a> {{.Length}}</p>
+  <p><audio src="{{.URL}}"></p>
+</section>
+{{end}}

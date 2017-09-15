@@ -3,6 +3,7 @@ package quiz
 import (
 	"errors"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/mail"
@@ -44,6 +45,42 @@ func (q *Episode) Filename(dir string) string {
 // the flat-file database in given directory
 func (q *Episode) CommentsFilename(dir string) string {
 	return filepath.Join(dir, fmt.Sprintf("%d.comments", q.Number))
+}
+
+// DescriptionHTML returns the desciption as a template.HTML
+func (q *Episode) DescriptionHTML() template.HTML {
+	return template.HTML(q.Description)
+}
+
+// SiteURL returns the absolute or relative URL of the quiz
+func (q *Episode) SiteURL(abs bool) string {
+	base := "http://podquiz.com"
+	if !abs {
+		base = ""
+	}
+	return fmt.Sprintf("%s/quiz.html?q=%d", base, q.Number)
+}
+
+// GUID returns a permalink for the episode (using the old URL for consistency)
+func (q *Episode) GUID() string {
+	return fmt.Sprintf("http://www.podquiz.com/quiz.php?q=pq/%d", q.Number)
+}
+
+// MP3 returns the name of the mp3 file for the quiz
+func (q *Episode) MP3() string {
+	return filepath.Base(q.URL)
+}
+
+// Length returns the length of the show as MM:SS
+func (q *Episode) Length() string {
+	minutes := q.Size / 480000
+	seconds := (q.Size - (minutes * 480000)) / 8000
+	return fmt.Sprintf("%d:%02d", minutes, seconds)
+}
+
+// CommentCount retuns the number of comments on the quiz
+func (q *Episode) CommentCount() int {
+	return len(q.Comments)
 }
 
 // Read returns a Quiz read from the supplied io.Reader

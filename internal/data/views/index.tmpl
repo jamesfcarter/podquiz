@@ -1,0 +1,26 @@
+{{define "content"}}
+<header>
+<h1>Welcome to Podquiz</h1>
+<p> PodQuiz is a weekly trivia quiz podcast. Each week there are twenty
+questions, some music as an interlude, followed by the answers. Get your Friday
+fix of trivia every week!</p>
+<p>Anyone wishing to keep score, or play amongst friends or family, might find
+the <a href='answersheet.pdf'>PodQuiz answer sheet</a> useful.</p>
+</header>
+<section class='quizzes'>
+{{range .Quizzes}}
+<article class='quiz'>
+  <h2>{{.Name}}</h2>
+  {{template "player" .}}
+  <p class='description'>{{.DescriptionHTML}}</p>
+  <section class='social'>
+    <div class='comdate'>
+      <a href='/quiz.html?q={{.Number}}'>Comment on this quiz ({{.CommentCount}})</a>
+      <br>
+      {{indexTime .Released}}
+    </div>
+  </section>
+</article>
+{{end}}
+</section>
+{{end}}

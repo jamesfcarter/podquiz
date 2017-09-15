@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<rss version="2.0"
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>PodQuiz weekly trivia quiz</title>
+    <link>http://www.podquiz.com/</link>
+    <description>A weekly twenty question trivia quiz podcast.</description>
+    <language>en</language>
+    <copyright>Copyright 2005-{{.ThisYear}} James Carter</copyright>
+    <lastBuildDate>{{rssTime .LastBuild}}</lastBuildDate>
+    <image>
+      <url>http://www.podquiz.com/img/rssbanner.png</url>
+      <title>PodQuiz</title>
+      <link>http://www.podquiz.com</link>
+    </image>
+    {{range .Quizzes}}
+    <item>
+      <title>{{.Name}}</title>
+      <link>{{.SiteURL true}}</link>
+      <description>{{.Description}}</description>
+      <enclosure url="{{.URL}}" length="{{.Size}}" type="audio/mpeg"/>
+      <pubDate>{{rssTime .Released}}</pubDate>
+      <guid isPermaLink="true">{{.GUID}}</guid>
+      <itunes:author>James Carter</itunes:author>
+      <itunes:explicit>No</itunes:explicit>
+      <itunes:keywords>trivia, quiz, questions, answers, music, podsafe, quizbowl, pub, pubquiz, fun, weekly</itunes:keywords>
+      <itunes:subtitle>{{.Name}}</itunes:subtitle>
+      <itunes:summary>{{.Description}}</itunes:summary>
+      <itunes:duration>{{.Length}}</itunes:duration>
+    </item>
+    {{end}}
+    <itunes:image href="http://www.podquiz.com/img/pqitunes.jpg"/>
+    <itunes:owner>
+    <itunes:name>James Carter</itunes:name>
+    <itunes:email>quizmaster@podquiz.com</itunes:email>
+    </itunes:owner>
+    <itunes:author>James Carter</itunes:author>
+    <itunes:explicit>No</itunes:explicit>
+    <itunes:keywords>trivia, quiz, questions, answers, music, podsafe, quizbowl, pub, pubquiz, fun, weekly</itunes:keywords>
+    <itunes:subtitle>The weekly trivia quiz podcast.</itunes:subtitle>
+    <itunes:summary>A weekly twenty question trivia quiz podcast.</itunes:summary>
+  </channel>
+</rss>

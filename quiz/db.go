@@ -51,6 +51,23 @@ func (d *Database) MostRecent() int {
 	return result
 }
 
+// Page returns an array of quizzes, newest first starting at first and
+// containing up to size entries.
+func (d *Database) Page(first, size int) []*Episode {
+	result := make([]*Episode, 0, size)
+	for epno := first; epno > 0; epno-- {
+		ep := d.Find(epno)
+		if ep == nil {
+			continue
+		}
+		result = append(result, ep)
+		if len(result) == size {
+			break
+		}
+	}
+	return result
+}
+
 // Update reconciles any changes made on the on-disc database with the cached
 // copy.
 func (d *Database) Update() error {
