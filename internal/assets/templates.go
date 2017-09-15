@@ -13,6 +13,12 @@ type LayoutTemplateData struct {
 	PageTitle string
 }
 
+type ArchiveTemplateData struct {
+	PageTitle  string
+	MostRecent int
+	Quizzes    []*quiz.Episode
+}
+
 type IndexTemplateData struct {
 	PageTitle string
 	Quizzes   []*quiz.Episode

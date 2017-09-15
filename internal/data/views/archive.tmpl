@@ -1,5 +1,15 @@
 {{define "content"}}
 <h1>PodQuiz Archive</h1>
+<div class='zipform'>
+  <h3>Download a zip archive of quizzes</h3>
+  <form action='archive.zip' method='post'>
+    <span class='label'>From episode:</span>&nbsp;
+    <input class='start' name='start' type='text' value='1'><br>
+    <span class='label'>To episode:</span>&nbsp;
+    <input class='end' name='end' type='text' value='{{.MostRecent}}'><br>
+    <input class='submit' name='submit' type='submit' value='Download ZIP'>
+  </form>
+</div>
 <section>
 {{range .Quizzes}}
 <span class='quizlink'>

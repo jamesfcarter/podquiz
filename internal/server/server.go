@@ -18,6 +18,7 @@ func (s *Server) App() (http.Handler, error) {
 	mux.HandleFunc("/guide.html", s.GuideHandler)
 	mux.HandleFunc("/quiz.html", s.QuizHandler)
 	mux.HandleFunc("/archive.html", s.ArchiveHandler)
+	mux.HandleFunc("/archive.zip", s.ZipHandler)
 	mux.HandleFunc("/comment", s.CommentHandler)
 	mux.HandleFunc("/reload", s.ReloadHandler)
 	mux.HandleFunc("/update", s.ReloadHandler)
