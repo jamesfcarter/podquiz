@@ -35,6 +35,13 @@ var (
 	BadFormatError = errors.New("bad format")
 )
 
+// HTML formats the comment for display in the browser
+func (c Comment) HTML() template.HTML {
+	escaped := template.HTMLEscapeString(c.Comment)
+	lines := strings.Split(escaped, "\n")
+	return template.HTML(strings.Join(lines, "<br>\n"))
+}
+
 // Filename returns the filename of this quiz in the flat-file database in
 // given directory
 func (q *Episode) Filename(dir string) string {

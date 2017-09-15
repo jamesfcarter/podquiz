@@ -18,6 +18,11 @@ type IndexTemplateData struct {
 	Quizzes   []*quiz.Episode
 }
 
+type QuizTemplateData struct {
+	PageTitle string
+	Quiz      *quiz.Episode
+}
+
 type RSSTemplateData struct {
 	LastBuild time.Time
 	ThisYear  int
@@ -32,6 +37,7 @@ func MakeTemplates() (*Templates, error) {
 	result := make(Templates)
 	for name, tmpl := range map[string]string{
 		"index":      withLayout("index"),
+		"quiz":       withLayout("quiz"),
 		"guide":      withLayout("guide"),
 		"stylesheet": stringAsset("stylesheet"),
 		"rss":        stringAsset("rss"),

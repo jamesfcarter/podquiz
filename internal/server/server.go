@@ -16,6 +16,8 @@ func (s *Server) App() (http.Handler, error) {
 	mux := http.NewServeMux()
 	assets.AddHandlers(mux)
 	mux.HandleFunc("/guide.html", s.GuideHandler)
+	mux.HandleFunc("/quiz.html", s.QuizHandler)
+	mux.HandleFunc("/quiz.php", s.QuizHandler)
 	mux.HandleFunc("/podquiz.css", s.StylesheetHandler)
 	mux.HandleFunc("/podquiz.rss", s.RSSHandler)
 	mux.HandleFunc("/", s.IndexHandler)
