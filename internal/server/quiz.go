@@ -11,7 +11,7 @@ import (
 func (s *Server) QuizHandler(w http.ResponseWriter, r *http.Request) {
 	q := s.Database.Find(parseQuizNo(r.URL.Query()["q"]))
 	if q == nil {
-		return
+		q = s.Database.Find(s.Database.MostRecent())
 	}
 	data := &assets.QuizTemplateData{
 		PageTitle: q.Name,
@@ -21,6 +21,9 @@ func (s *Server) QuizHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func parseQuizNo(arg []string) int {
+	if len(arg) == 0 {
+		return 0
+	}
 	parts := strings.Split(arg[0], "/")
 	n, _ := strconv.Atoi(parts[len(parts)-1])
 	return n
