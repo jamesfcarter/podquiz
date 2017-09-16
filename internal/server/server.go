@@ -10,8 +10,9 @@ import (
 )
 
 type Server struct {
-	Database *quiz.Database
-	Template *assets.Templates
+	Database   *quiz.Database
+	Template   *assets.Templates
+	PictureDir string
 }
 
 func Log(handler http.Handler) http.Handler {
@@ -37,6 +38,7 @@ func (s *Server) App() (http.Handler, error) {
 	mux.HandleFunc("/podquiz.css", s.StylesheetHandler)
 	mux.HandleFunc("/podquiz.rss", s.RSSHandler)
 	mux.HandleFunc("/rss.php", s.RSSHandler)
+	mux.HandleFunc("/pictures/", s.PictureHandler)
 	mux.HandleFunc("/", s.IndexHandler)
 	return Log(mux), nil
 }
