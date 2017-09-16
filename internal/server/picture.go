@@ -9,7 +9,7 @@ import (
 func (s *Server) PictureHandler(w http.ResponseWriter, r *http.Request) {
 	fn := filepath.Base(r.URL.Path)
 	if !strings.HasSuffix(fn, ".jpg") && !strings.HasSuffix(fn, ".png") {
-		http.Error(w, "not found", http.StatusNotFound)
+		http.Error(w, "404 page not found", http.StatusNotFound)
 		return
 	}
 	path := filepath.Join(s.PictureDir, fn)

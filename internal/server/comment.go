@@ -15,6 +15,7 @@ func (s *Server) CommentHandler(w http.ResponseWriter, r *http.Request) {
 
 	q := s.Database.Find(parseQuizFormNo(r, "q"))
 	if q == nil {
+		http.Error(w, "bad quiz", http.StatusBadRequest)
 		return
 	}
 	data := &assets.QuizTemplateData{

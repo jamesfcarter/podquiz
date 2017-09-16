@@ -11,7 +11,8 @@ import (
 func (s *Server) QuizHandler(w http.ResponseWriter, r *http.Request) {
 	q := s.Database.Find(parseQuizNo(r.URL.Query()["q"]))
 	if q == nil {
-		q = s.Database.Find(s.Database.MostRecent())
+		http.Error(w, "404 page not found", http.StatusNotFound)
+		return
 	}
 	data := &assets.QuizTemplateData{
 		PageTitle: q.Name,
