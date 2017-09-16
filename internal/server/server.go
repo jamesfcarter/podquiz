@@ -15,12 +15,26 @@ type Server struct {
 	PictureDir string
 }
 
+type loggedResponseWriter struct {
+	http.ResponseWriter
+	Code int
+}
+
+func (l *loggedResponseWriter) WriteHeader(code int) {
+	l.Code = code
+	l.ResponseWriter.WriteHeader(code)
+}
+
 func Log(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		lw := &loggedResponseWriter{
+			ResponseWriter: w,
+			Code:           http.StatusOK,
+		}
 		start := time.Now()
-		handler.ServeHTTP(w, r)
+		handler.ServeHTTP(lw, r)
 		elapsed := time.Since(start)
-		log.Printf("%s %s %s", r.Method, r.URL, elapsed)
+		log.Printf("%s %s %d %s", r.Method, r.URL, lw.Code, elapsed)
 	})
 }
 
