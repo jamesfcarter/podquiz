@@ -51,6 +51,19 @@ func (d *Database) MostRecent() int {
 	return result
 }
 
+// Count returns the total number of episodes from (and including) from
+func (d *Database) Count(from int) int {
+	d.RLock()
+	defer d.RUnlock()
+	result := 0
+	for i, _ := range d.Cache {
+		if i >= from {
+			result += 1
+		}
+	}
+	return result
+}
+
 // Page returns an array of quizzes, newest first starting at first and
 // containing up to size entries.
 func (d *Database) Page(first, size int) []*Episode {
