@@ -13,6 +13,7 @@ type Server struct {
 	Database   *quiz.Database
 	Template   *assets.Templates
 	PictureDir string
+	MerchUrl   string
 }
 
 type loggedResponseWriter struct {
@@ -41,6 +42,8 @@ func Log(handler http.Handler) http.Handler {
 func (s *Server) App() (http.Handler, error) {
 	mux := http.NewServeMux()
 	assets.AddHandlers(mux)
+	merchRedirect := NewRedirectHandler(s.MerchUrl)
+	mux.HandleFunc("/merch/", merchRedirect)
 	mux.HandleFunc("/guide.html", s.GuideHandler)
 	mux.HandleFunc("/quiz.html", s.QuizHandler)
 	mux.HandleFunc("/archive.html", s.ArchiveHandler)
