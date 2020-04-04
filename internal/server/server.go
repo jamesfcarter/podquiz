@@ -55,6 +55,7 @@ func (s *Server) App() (http.Handler, error) {
 	mux.HandleFunc("/podquiz.css", s.StylesheetHandler)
 	mux.HandleFunc("/podquiz.rss", s.RSSHandler)
 	mux.HandleFunc("/rss.php", s.RSSHandler)
+	mux.HandleFunc("/full.rss", s.RSSFullHandler)
 	mux.HandleFunc("/pictures/", s.PictureHandler)
 	mux.HandleFunc("/", s.IndexHandler)
 	return Log(mux), nil

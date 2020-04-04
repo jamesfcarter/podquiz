@@ -15,3 +15,12 @@ func (s *Server) RSSHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	s.RenderRSS(w, "rss", data)
 }
+
+func (s *Server) RSSFullHandler(w http.ResponseWriter, r *http.Request) {
+	data := &assets.RSSTemplateData{
+		LastBuild: s.Database.Find(s.Database.MostRecent()).Released,
+		ThisYear:  time.Now().Year(),
+		Quizzes:   s.Database.All(),
+	}
+	s.RenderRSS(w, "rss", data)
+}
