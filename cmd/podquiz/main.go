@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/jamesfcarter/podquiz/internal/assets"
+	"github.com/jamesfcarter/podquiz/internal/done"
 	"github.com/jamesfcarter/podquiz/internal/server"
 	"github.com/jamesfcarter/podquiz/quiz"
 )
@@ -31,7 +32,16 @@ func main() {
 		merchUrl = "http://google.com"
 	}
 
+	doneFile := os.Getenv("PQ_DONEFILE")
+	if doneFile == "" {
+		doneFile = "done.txt"
+	}
+
 	templates, err := assets.MakeTemplates()
+	if err != nil {
+		log.Fatal(err)
+	}
+	done, err := done.New(doneFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,6 +50,7 @@ func main() {
 		Template:   templates,
 		PictureDir: pictures,
 		MerchUrl:   merchUrl,
+		Done:       done,
 	}
 
 	log.Printf("Database directory: %s\n", dir)

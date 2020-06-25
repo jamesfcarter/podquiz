@@ -1,0 +1,7 @@
+{{define "content"}}
+<h1>Rounds already done</h1>
+{{range $title, $rounds := .Done}}
+<h2>{{$title}}</h2>
+<p><tt>{{$rounds}}</tt></p>
+{{end}}
+{{end}}

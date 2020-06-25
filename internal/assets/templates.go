@@ -31,6 +31,11 @@ type QuizTemplateData struct {
 	Quiz        *quiz.Episode
 }
 
+type DoneTemplateData struct {
+	PageTitle string
+	Done      map[string]string
+}
+
 type RSSTemplateData struct {
 	LastBuild time.Time
 	ThisYear  int
@@ -48,6 +53,7 @@ func MakeTemplates() (*Templates, error) {
 		"quiz":       withLayout("quiz"),
 		"archive":    withLayout("archive"),
 		"guide":      withLayout("guide"),
+		"done":       withLayout("done"),
 		"stylesheet": stringAsset("stylesheet"),
 		"rss":        stringAsset("rss"),
 	} {

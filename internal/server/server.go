@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/jamesfcarter/podquiz/internal/assets"
+	"github.com/jamesfcarter/podquiz/internal/done"
 	"github.com/jamesfcarter/podquiz/quiz"
 )
 
@@ -14,6 +15,7 @@ type Server struct {
 	Template   *assets.Templates
 	PictureDir string
 	MerchUrl   string
+	Done       *done.Done
 }
 
 type loggedResponseWriter struct {
@@ -45,6 +47,7 @@ func (s *Server) App() (http.Handler, error) {
 	merchRedirect := NewRedirectHandler(s.MerchUrl)
 	mux.HandleFunc("/merch/", merchRedirect)
 	mux.HandleFunc("/guide.html", s.GuideHandler)
+	mux.HandleFunc("/done.html", s.DoneHandler)
 	mux.HandleFunc("/quiz.html", s.QuizHandler)
 	mux.HandleFunc("/archive.html", s.ArchiveHandler)
 	mux.HandleFunc("/archive.zip", s.ZipHandler)
