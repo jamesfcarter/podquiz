@@ -58,6 +58,8 @@ func main() {
 	log.Printf("Merch URL: %s\n", merchUrl)
 	log.Printf("Starting service on %s\n", endpoint)
 
+	server.Database.Update()
+
 	app, err := server.App()
 	if err != nil {
 		log.Fatal(err)
