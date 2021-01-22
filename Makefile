@@ -8,7 +8,7 @@ test: bindata fmt
 	go test ./...
 
 build:  bindata
-	go build github.com/jamesfcarter/podquiz/cmd/podquiz
+	go build -tags netgo github.com/jamesfcarter/podquiz/cmd/podquiz
 
 run: build
 	./podquiz
