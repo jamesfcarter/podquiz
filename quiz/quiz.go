@@ -36,6 +36,13 @@ var (
 	BadFormatError = errors.New("bad format")
 )
 
+func https(s string) string {
+	if strings.HasPrefix(s, "http://") {
+		s = "https" + strings.TrimPrefix(s, "http")
+	}
+	return s
+}
+
 // HTML formats the comment for display in the browser
 func (c Comment) HTML() template.HTML {
 	escaped := template.HTMLEscapeString(c.Comment)
@@ -58,6 +65,15 @@ func (q *Episode) CommentsFilename(dir string) string {
 // DescriptionHTML returns the desciption as a template.HTML
 func (q *Episode) DescriptionHTML() template.HTML {
 	return template.HTML(q.Description)
+}
+
+// OldURL returns an http link to the mp3 for the RSS
+func (q *Episode) OldURL() string {
+	s := q.URL
+	if strings.HasPrefix(s, "https://") {
+		s = "http" + strings.TrimPrefix(s, "https")
+	}
+	return s
 }
 
 // SiteURL returns the absolute or relative URL of the quiz
@@ -117,7 +133,7 @@ func Read(r io.Reader) (*Episode, error) {
 		Number:      number,
 		Name:        fields[1],
 		Released:    released,
-		URL:         fields[3],
+		URL:         https(fields[3]),
 		Size:        size,
 		Description: fields[5],
 	}, nil

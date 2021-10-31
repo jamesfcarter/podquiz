@@ -63,7 +63,7 @@ It has some lines.
 	if !quiz.Released.Equal(time.Date(1974, 8, 5, 0, 0, 0, 0, loc)) {
 		t.Errorf("bad release time %v", quiz.Released)
 	}
-	if quiz.URL != "http://mp3.podquiz.com/pq42.mp3" {
+	if quiz.URL != "https://mp3.podquiz.com/pq42.mp3" {
 		t.Errorf("bad quiz number %s", quiz.URL)
 	}
 	if quiz.Size != 12345 {
@@ -91,7 +91,7 @@ This is another test.
 		t.Fatal(err)
 	}
 	if len(quiz.Comments) != 2 {
-		t.Fatal("expecting two comments, got %d", len(quiz.Comments))
+		t.Fatalf("expecting two comments, got %d", len(quiz.Comments))
 	}
 	loc, err := time.LoadLocation("")
 	if err != nil {

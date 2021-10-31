@@ -29,7 +29,7 @@ func main() {
 
 	merchUrl := os.Getenv("PQ_MERCHURL")
 	if merchUrl == "" {
-		merchUrl = "http://google.com"
+		merchUrl = "https://google.com"
 	}
 
 	doneFile := os.Getenv("PQ_DONEFILE")
