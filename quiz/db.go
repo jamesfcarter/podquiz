@@ -126,17 +126,19 @@ func (d *Database) Update() error {
 			log.Printf("failed to open %s: %v\n", fi.Name(), err)
 			continue
 		}
-		defer r.Close()
 		q, err := Read(r)
 		if err != nil {
 			log.Printf("failed to read %s: %v\n", fi.Name(), err)
+			r.Close()
 			continue
 		}
 		if q.Number != n {
 			log.Printf("mismatched quiz number %d in %s\n", q.Number, fi.Name())
+			r.Close()
 			continue
 		}
 		d.Cache[n] = q
+		r.Close()
 	}
 	for _, fi := range files {
 		if !strings.HasSuffix(fi.Name(), ".comments") {
@@ -155,12 +157,13 @@ func (d *Database) Update() error {
 			log.Printf("failed to open %s: %v\n", fi.Name(), err)
 			continue
 		}
-		defer r.Close()
 		err = d.Cache[n].ReadComments(r)
 		if err != nil {
 			log.Printf("failed to read %s: %v\n", fi.Name(), err)
+			r.Close()
 			continue
 		}
+		r.Close()
 	}
 	d.LastUpdate = updateTime
 	return nil

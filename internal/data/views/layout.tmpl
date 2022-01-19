@@ -10,6 +10,8 @@
     <title>{{.PageTitle}}</title>
   </head>
   <body class='podquiz'>
+
+    <a class='skip-nav-link' href='#content'>skip navigation</a>
     
     <!--
     <div id="fb-root"></div>
@@ -74,7 +76,7 @@
         </a>
       </section>
     </nav>
-    <section class='content'>
+    <section id='content' class='content'>
 {{template "content" .}}
 	<footer>
 	    <hr>

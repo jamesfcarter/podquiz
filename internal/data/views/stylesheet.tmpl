@@ -205,6 +205,16 @@ body
   body > nav.sidebar
     position:fixed
 
+a.skip-nav-link
+  position: absolute
+  padding: $page_pad
+  background-color: $brown
+  color: $yellow
+  transform: translateY(-120%)
+
+a.skip-nav-link:focus
+  transform: translateY(0)
+
 .content
   padding-right: $page_pad
 
