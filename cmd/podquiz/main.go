@@ -11,6 +11,14 @@ import (
 	"github.com/jamesfcarter/podquiz/quiz"
 )
 
+func fromEnv(name, dflt string) string {
+	value := os.Getenv(name)
+	if value == "" {
+		value = dflt
+	}
+	return value
+}
+
 func main() {
 	dir := os.Getenv("PQ_DIR")
 	pictures := os.Getenv("PQ_PICTURES")
@@ -22,26 +30,13 @@ func main() {
 		pictures = dir + "/../pictures"
 	}
 
-	endpoint := os.Getenv("PQ_ENDPOINT")
-	if endpoint == "" {
-		endpoint = ":8080"
-	}
-
-	merchUrl := os.Getenv("PQ_MERCHURL")
-	if merchUrl == "" {
-		merchUrl = "https://google.com"
-	}
-
-	doneFile := os.Getenv("PQ_DONEFILE")
-	if doneFile == "" {
-		doneFile = "done.txt"
-	}
+	endpoint := fromEnv("PQ_ENDPOINT", ":8080")
 
 	templates, err := assets.MakeTemplates()
 	if err != nil {
 		log.Fatal(err)
 	}
-	done, err := done.New(doneFile)
+	done, err := done.New(fromEnv("PQ_DONEFILE", "done.txt"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,13 +44,15 @@ func main() {
 		Database:   quiz.NewDatabase(dir),
 		Template:   templates,
 		PictureDir: pictures,
-		MerchUrl:   merchUrl,
+		MerchUrl:   fromEnv("PQ_MERCHURL", "http://google.com"),
+		DiscordUrl: fromEnv("PQ_DISCORDURL", "http://google.com"),
 		Done:       done,
 	}
 
 	log.Printf("Database directory: %s\n", dir)
 	log.Printf("Pictures directory: %s\n", pictures)
-	log.Printf("Merch URL: %s\n", merchUrl)
+	log.Printf("Merch URL: %s\n", server.MerchUrl)
+	log.Printf("Discord URL: %s\n", server.DiscordUrl)
 	log.Printf("Starting service on %s\n", endpoint)
 
 	server.Database.Update()

@@ -15,6 +15,7 @@ type Server struct {
 	Template   *assets.Templates
 	PictureDir string
 	MerchUrl   string
+	DiscordUrl string
 	Done       *done.Done
 }
 
@@ -44,8 +45,8 @@ func Log(handler http.Handler) http.Handler {
 func (s *Server) App() (http.Handler, error) {
 	mux := http.NewServeMux()
 	assets.AddHandlers(mux)
-	merchRedirect := NewRedirectHandler(s.MerchUrl)
-	mux.HandleFunc("/merch/", merchRedirect)
+	mux.HandleFunc("/merch/", NewRedirectHandler(s.MerchUrl))
+	mux.HandleFunc("/discord/", NewRedirectHandler(s.DiscordUrl))
 	mux.HandleFunc("/guide.html", s.GuideHandler)
 	mux.HandleFunc("/done.html", s.DoneHandler)
 	mux.HandleFunc("/quiz.html", s.QuizHandler)
