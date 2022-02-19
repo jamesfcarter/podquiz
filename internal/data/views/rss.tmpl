@@ -13,6 +13,17 @@
       <title>PodQuiz</title>
       <link>http://www.podquiz.com</link>
     </image>
+    <itunes:image href="http://www.podquiz.com/img/pqlogo-trans3000.png" />
+    <itunes:owner>
+    <itunes:name>James Carter</itunes:name>
+    <itunes:email>quizmaster@podquiz.com</itunes:email>
+    </itunes:owner>
+    <itunes:author>James Carter</itunes:author>
+    <itunes:explicit>No</itunes:explicit>
+    <itunes:category text="Leisure" />
+    <itunes:keywords>trivia, quiz, questions, answers, music, podsafe, quizbowl, pub, pubquiz, fun, weekly</itunes:keywords>
+    <itunes:subtitle>The weekly trivia quiz podcast.</itunes:subtitle>
+    <itunes:summary>A weekly twenty question trivia quiz podcast.</itunes:summary>
     {{range .Quizzes}}
     <item>
       <title>{{.Name}}</title>
@@ -21,6 +32,7 @@
       <enclosure url="{{.OldURL}}" length="{{.Size}}" type="audio/mpeg"/>
       <pubDate>{{rssTime .Released}}</pubDate>
       <guid isPermaLink="true">{{.GUID}}</guid>
+      <itunes:title>{{.Name}}</itunes:title>
       <itunes:author>James Carter</itunes:author>
       <itunes:explicit>No</itunes:explicit>
       <itunes:keywords>trivia, quiz, questions, answers, music, podsafe, quizbowl, pub, pubquiz, fun, weekly</itunes:keywords>
@@ -29,15 +41,5 @@
       <itunes:duration>{{.Length}}</itunes:duration>
     </item>
     {{end}}
-    <itunes:image href="http://www.podquiz.com/img/pqitunes.jpg"/>
-    <itunes:owner>
-    <itunes:name>James Carter</itunes:name>
-    <itunes:email>quizmaster@podquiz.com</itunes:email>
-    </itunes:owner>
-    <itunes:author>James Carter</itunes:author>
-    <itunes:explicit>No</itunes:explicit>
-    <itunes:keywords>trivia, quiz, questions, answers, music, podsafe, quizbowl, pub, pubquiz, fun, weekly</itunes:keywords>
-    <itunes:subtitle>The weekly trivia quiz podcast.</itunes:subtitle>
-    <itunes:summary>A weekly twenty question trivia quiz podcast.</itunes:summary>
   </channel>
 </rss>
