@@ -1,36 +1,49 @@
 package assets
 
 import (
+	"bytes"
+	"embed"
+	"io/fs"
+	"io/ioutil"
+	"log"
 	"net/http"
-	"path/filepath"
 	"strings"
-
-	"github.com/mattetti/filebuffer"
 )
 
-func AddHandlers(mux *http.ServeMux) {
-	for _, name := range AssetNames() {
-		if !staticAsset(name) {
-			continue
+//go:embed static
+var static embed.FS
+
+func AddStaticHandlers(mux *http.ServeMux) {
+	if err := fs.WalkDir(static, "static", addAsset(mux)); err != nil {
+		log.Fatalf("failed to read static assets: %v", err)
+	}
+}
+
+func addAsset(mux *http.ServeMux) func(string, fs.DirEntry, error) error {
+	return func(path string, d fs.DirEntry, err error) error {
+		if path == "static" {
+			return nil
 		}
-		mux.HandleFunc(webPath(name), AssetWriterFunc(name))
+		urlPath := strings.TrimPrefix(path, "static")
+		mux.HandleFunc(urlPath, staticServe(path))
+		return nil
 	}
 }
 
-func AssetWriterFunc(name string) func(http.ResponseWriter, *http.Request) {
+func staticServe(path string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		buf := filebuffer.New(MustAsset(name))
-		info, _ := AssetInfo(name)
-		http.ServeContent(w, r, webPath(name), info.ModTime(), buf)
+		f, err := static.Open(path)
+		if err != nil {
+			log.Printf("unable to open static asset %s: %v", path, err)
+		}
+		fInfo, err := f.Stat()
+		if err != nil {
+			log.Printf("unable to stat static asset %s: %v", path, err)
+		}
+		buf, err := ioutil.ReadAll(f)
+		if err != nil {
+			log.Printf("unable to read static asset %s: %v", path, err)
+		}
+		http.ServeContent(w, r, path, fInfo.ModTime(), bytes.NewReader(buf))
 	}
-}
-
-func staticAsset(name string) bool {
-	parts := strings.SplitN(name, "/", 2)
-	return parts[0] == "static"
-}
-
-func webPath(name string) string {
-	parts := strings.Split(name, "/")
-	return "/" + filepath.Join(parts[1:]...)
 }

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 	"time"
@@ -12,7 +13,7 @@ import (
 
 type Server struct {
 	Database   *quiz.Database
-	Template   *assets.Templates
+	Templates  map[string]*template.Template
 	PictureDir string
 	MerchUrl   string
 	DiscordUrl string
@@ -44,7 +45,7 @@ func Log(handler http.Handler) http.Handler {
 
 func (s *Server) App() (http.Handler, error) {
 	mux := http.NewServeMux()
-	assets.AddHandlers(mux)
+	assets.AddStaticHandlers(mux)
 	mux.HandleFunc("/merch/", NewRedirectHandler(s.MerchUrl))
 	mux.HandleFunc("/discord/", NewRedirectHandler(s.DiscordUrl))
 	mux.HandleFunc("/guide.html", s.GuideHandler)

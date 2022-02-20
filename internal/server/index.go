@@ -2,8 +2,6 @@ package server
 
 import (
 	"net/http"
-
-	"github.com/jamesfcarter/podquiz/internal/assets"
 )
 
 func (s *Server) IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -11,11 +9,11 @@ func (s *Server) IndexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 		return
 	}
-	data := &assets.IndexTemplateData{
+	data := &IndexTemplateData{
 		PageTitle: "Podquiz",
 		Quizzes:   s.Database.Page(s.Database.MostRecent(), 10),
 	}
-	s.RenderHTML(w, "index", data)
+	s.RenderHTML(w, "index.html", data)
 }
 
 func validIndexPath(path string) bool {

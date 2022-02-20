@@ -1,18 +1,15 @@
-package assets_test
+package assets
 
 import (
-	"bytes"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/jamesfcarter/podquiz/internal/assets"
 )
 
-func TestAddHandlers(t *testing.T) {
+func TestAddStaticHandlers(t *testing.T) {
 	mux := http.NewServeMux()
-	assets.AddHandlers(mux)
+	AddStaticHandlers(mux)
 	server := httptest.NewServer(mux)
 	defer server.Close()
 	res, err := http.Get(server.URL + "/img/pqlogo-trans192.png")
@@ -31,7 +28,7 @@ func TestAddHandlers(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if bytes.Compare(img, assets.MustAsset("static/img/pqlogo-trans192.png")) != 0 {
-		t.Error("bad image returned")
+	if length := len(img); length != 10387 {
+		t.Errorf("wrong length %d", length)
 	}
 }

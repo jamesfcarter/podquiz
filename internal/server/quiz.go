@@ -4,8 +4,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-
-	"github.com/jamesfcarter/podquiz/internal/assets"
 )
 
 func (s *Server) QuizHandler(w http.ResponseWriter, r *http.Request) {
@@ -14,11 +12,11 @@ func (s *Server) QuizHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 		return
 	}
-	data := &assets.QuizTemplateData{
+	data := &QuizTemplateData{
 		PageTitle: q.Name,
 		Quiz:      q,
 	}
-	s.RenderHTML(w, "quiz", data)
+	s.RenderHTML(w, "quiz.html", data)
 }
 
 func parseQuizNo(arg []string) int {

@@ -5,5 +5,5 @@ import (
 )
 
 func (s *Server) StylesheetHandler(w http.ResponseWriter, r *http.Request) {
-	s.RenderSass(w, "stylesheet", nil)
+	s.RenderSass(w, "podquiz.css", nil)
 }

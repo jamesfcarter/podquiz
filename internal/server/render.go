@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -29,7 +30,7 @@ func (s *Server) RenderSass(w http.ResponseWriter, template string, data interfa
 	go func() {
 		defer wg.Done()
 		defer wtr.Close()
-		err := s.Template.Exec(template, wtr, data)
+		err := s.executeTemplate(wtr, template, data)
 		if err != nil {
 			log.Print(err)
 		}
@@ -44,11 +45,19 @@ func (s *Server) RenderSass(w http.ResponseWriter, template string, data interfa
 	wg.Wait()
 }
 
+func (s *Server) executeTemplate(w io.Writer, name string, data interface{}) error {
+	template, ok := s.Templates[name]
+	if !ok {
+		return fmt.Errorf("no such template %s", name)
+	}
+	return template.Execute(w, data)
+}
+
 func (s *Server) render(w http.ResponseWriter, contentType string, template string, data interface{}) {
 	if contentType != "" {
 		w.Header().Set("Content-Type", contentType)
 	}
-	err := s.Template.Exec(template, w, data)
+	err := s.executeTemplate(w, template, data)
 	if err != nil {
 		log.Print(err)
 	}

@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/jamesfcarter/podquiz/internal/assets"
 	"github.com/jamesfcarter/podquiz/quiz"
 )
 
@@ -18,7 +17,7 @@ func (s *Server) CommentHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad quiz", http.StatusBadRequest)
 		return
 	}
-	data := &assets.QuizTemplateData{
+	data := &QuizTemplateData{
 		PageTitle: q.Name,
 		Quiz:      q,
 	}
@@ -34,7 +33,7 @@ func (s *Server) CommentHandler(w http.ResponseWriter, r *http.Request) {
 		data.CommentName = from
 		data.Comment = comment
 	}
-	s.RenderHTML(w, "quiz", data)
+	s.RenderHTML(w, "quiz.html", data)
 }
 
 func parseQuizFormNo(r *http.Request, arg string) int {
