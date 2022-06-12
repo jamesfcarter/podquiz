@@ -34,11 +34,12 @@
     </script>
     -->
 
-    <nav class='sidebar'>
+    <nav class='sidebar' id='menu'>
+      <div class='closemenu' onclick='closeMenu()' style='float: left; font-size: 400%'>&times;</div>
       <header>
         <a href='/'>
-          <span class='hpodquiz'>PodQuiz</span>
-          <img alt='' src='/img/pqlogo-trans192.png'>
+          <span class='hpodquiz'>PodQuiz</span><br>
+          <img alt='' src='/img/pqlogo-trans192.png'><br>
           <span class='htagline'>The weekly trivia quiz podcast.</span>
         </a>
       </header>
@@ -82,12 +83,33 @@
       </section>
     </nav>
     <section id='content' class='content'>
+    <div class='menubutton' onclick='openMenu()' style='float: left; padding-top:30px; padding-left: 15px'>
+      <svg viewBox='0 0 10 8' width='60'>
+        <path d='M1 1h8M1 4h 8M1 7h8' 
+          stroke='#000' 
+          stroke-width='2' 
+          stroke-linecap='round'/>
+      </svg>
+    </div>
 {{template "content" .}}
 	<footer>
 	    <hr>
 	    <img alt='' class='logo' height='16' src='img/ico16w.png' width='16'>
 	</footer>
     </section>
+    <script>
+      function openMenu() {
+        document.getElementById("menu").style.width = "90%";
+        document.getElementById("menu").style.display = "block";
+        document.getElementById("menu").style.zoom = "2";
+        document.getElementById("content").style.display = "none";
+      }
+      function closeMenu() {
+        document.getElementById("menu").style.width = "0";
+        document.getElementById("menu").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }
+    </script>
   </body>
 </html>
 {{end}}
