@@ -34,11 +34,12 @@
     </script>
     -->
 
-    <nav class='sidebar'>
+    <nav class='sidebar' id='menu'>
+      <div class='closemenu' onclick='closeMenu()' style='float: left; font-size: 400%'>&times;</div>
       <header>
         <a href='/'>
-          <span class='hpodquiz'>PodQuiz</span>
-          <img alt='' src='/img/pqlogo-trans192.png'>
+          <span class='hpodquiz'>PodQuiz</span><br>
+          <img alt='' src='/img/pqlogo-trans192.png'><br>
           <span class='htagline'>The weekly trivia quiz podcast.</span>
         </a>
       </header>
@@ -70,11 +71,15 @@
         <a href='https://podcasts.apple.com/gb/podcast/podquiz-weekly-trivia-quiz/id73796947'>
           <img alt='Open in iTunes' height='20' src='img/itunes.gif' title='Open in iTunes' width='65'>
         </a>
+        <br>
         <a href='https://www.facebook.com/podquiz/'>
-          <img alt='PodQuiz on Facebook' height='80' src='/img/facebook.png' title='PodQuiz on Facebook' width='80'>
+          <img alt='PodQuiz on Facebook' height='40' src='/img/facebook.png' title='PodQuiz on Facebook' width='40'>
         </a>
         <a href='https://www.twitter.com/podquiz'>
-          <img alt='PodQuiz on Twitter' height='80' src='/img/twitter.png' title='PodQuiz on Twitter' width='80'>
+          <img alt='PodQuiz on Twitter' height='40' src='/img/twitter.png' title='PodQuiz on Twitter' width='40'>
+        </a>
+        <a rel='me' href='https://masthead.social/@podquiz'>
+          <img alt='PodQuiz on Mastodon' height='40' src='/img/mastodon.png' title='PodQuiz on Twitter' width='40'>
         </a>
         <a href='https://clustrmaps.com/counter/maps.php?url=http://www.podquiz.com/' id='clustrMapsLink'>
           <img alt='Locations of visitors to this page' src='https://clustrmaps.com/counter/index2.php?url=http://www.podquiz.com/'>
@@ -82,12 +87,33 @@
       </section>
     </nav>
     <section id='content' class='content'>
+    <div class='menubutton' onclick='openMenu()' style='float: left; padding-top:30px; padding-left: 15px'>
+      <svg viewBox='0 0 10 8' width='60'>
+        <path d='M1 1h8M1 4h 8M1 7h8' 
+          stroke='#000' 
+          stroke-width='2' 
+          stroke-linecap='round'/>
+      </svg>
+    </div>
 {{template "content" .}}
 	<footer>
 	    <hr>
 	    <img alt='' class='logo' height='16' src='img/ico16w.png' width='16'>
 	</footer>
     </section>
+    <script>
+      function openMenu() {
+        document.getElementById("menu").style.width = "90%";
+        document.getElementById("menu").style.display = "block";
+        document.getElementById("menu").style.zoom = "2";
+        document.getElementById("content").style.display = "none";
+      }
+      function closeMenu() {
+        document.getElementById("menu").style.width = "0";
+        document.getElementById("menu").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }
+    </script>
   </body>
 </html>
 {{end}}

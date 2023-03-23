@@ -14,12 +14,10 @@ the <a href='answersheet.pdf'>PodQuiz answer sheet</a> useful.</p>
   <h2>{{.Name}}</h2>
   {{template "player" .}}
   <p class='description'>{{.DescriptionHTML}}</p>
-  <section class='social'>
-    <div class='comdate'>
-      <a href='/quiz.html?q={{.Number}}'>Comment on this quiz ({{.CommentCount}})</a>
-      <br>
-      {{indexTime .Released}}
-    </div>
+  <section class='comdate'>
+    <a href='/quiz.html?q={{.Number}}'>Comment on this quiz ({{.CommentCount}})</a>
+    <br>
+    {{indexTime .Released}}
   </section>
 </article>
 {{end}}

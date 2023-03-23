@@ -82,34 +82,36 @@ $brownbox()
     color: $red
     text-decoration: none
 
-section.social
-  height: 3em
-  div
-    float: left
-    height: 25px
-  .facebook
-    width: 90px
-  .plusone
-    width: 120px
+.comdate
+  padding-right: 1em
+
+@media screen and (min-device-width: 400px)
   .comdate
-    padding-right: 1em
     font-size: 80%
 
 article.quiz
   clear: both
   padding-bottom: 1em
-  section.player
-    $brownbox()
-    width: 226px
-    float: right
-    text-align: center
-    padding-left: 4px
-    margin-left: 1em
-    margin-right: 4px
   p.description
     br
       display: block
       margin-bottom: 0.5em
+
+.player
+  $brownbox()
+  width: 226px
+  float: none
+  zoom: 3
+  text-align: center
+  padding-left: 4px
+  margin-left: 1em
+  margin-right: 4px
+
+@media screen and (min-device-width: 400px)
+  .player
+    float: right
+    zoom: 1
+
 
 section.comments
   clear: both
@@ -177,12 +179,13 @@ footer
 
 body
   margin: 0
-  padding: 0 0 0 $body_width
+
 .sidebar
-  position: absolute
+  position: fixed
   top: 0
   left: $page_pad
-  width: $sidebar_width
+  display: none
+  width: 0
   height: 100%
   text-align: center
   a:link, a:visited, a:hover
@@ -191,9 +194,9 @@ body
     padding-top: 10px
     padding-bottom: 10px
     .hpodquiz
-      font-size: 150%
+      font-size: 1.5rem
     .htagline
-      font-size: 105%
+      font-size: 1.05rem
   section.box
     $brownbox()
     font-weight: bolder
@@ -201,6 +204,19 @@ body
     margin-bottom: 5px
     padding-top: 3px
     padding-bottom: 3px
+
+.closemenu:
+  font-size: 4rem
+  font-weight: bolder
+  float: left
+
+@media screen and (min-device-width: 400px)
+  .sidebar
+    width: $sidebar_width
+    display: block
+  .closemenu
+    display: none
+
 @media screen
   body > nav.sidebar
     position:fixed
@@ -216,7 +232,17 @@ a.skip-nav-link:focus
   transform: translateY(0)
 
 .content
+  padding-left: $page_pad
   padding-right: $page_pad
+
+@media screen and (min-device-width: 400px)
+  .content
+    padding-left: $body_width
+  .menubutton
+    display: none
+
+.menubutton
+  float:left
 
 span.quizlink
   float: left
