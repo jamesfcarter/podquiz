@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"net/mail"
 	"os"
 	"path/filepath"
@@ -16,13 +15,14 @@ import (
 
 // Episode represents a single episode of PodQuiz
 type Episode struct {
-	Number      int
-	Name        string
-	URL         string
-	Released    time.Time
-	Size        int64
-	Description string
-	Comments    []Comment
+	Number         int
+	Name           string
+	URL            string
+	Released       time.Time
+	Size           int64
+	RestrictedSize int64
+	Description    string
+	Comments       []Comment
 }
 
 // Comment represents a comment on a quiz
@@ -76,6 +76,11 @@ func (q *Episode) OldURL() string {
 	return s
 }
 
+// RestrictedURL returns an http link to the restricted version of the mp3
+func (q *Episode) RestrictedURL() string {
+	return strings.ReplaceAll(q.OldURL(), "/pq", "/mpq")
+}
+
 // SiteURL returns the absolute or relative URL of the quiz
 func (q *Episode) SiteURL(abs bool) string {
 	base := "http://podquiz.com"
@@ -109,7 +114,7 @@ func (q *Episode) CommentCount() int {
 
 // Read returns a Quiz read from the supplied io.Reader
 func Read(r io.Reader) (*Episode, error) {
-	data, err := ioutil.ReadAll(r)
+	data, err := io.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
@@ -121,21 +126,30 @@ func Read(r io.Reader) (*Episode, error) {
 	if err != nil {
 		return nil, err
 	}
-	size, err := strconv.ParseInt(fields[4], 10, 64)
+	sizes := strings.Split(fields[4], ",")
+	size, err := strconv.ParseInt(sizes[0], 10, 64)
 	if err != nil {
 		return nil, err
+	}
+	var restrictedSize int64
+	if len(sizes) > 1 {
+		restrictedSize, err = strconv.ParseInt(sizes[1], 10, 64)
+		if err != nil {
+			return nil, err
+		}
 	}
 	released, err := mail.ParseDate(fields[2])
 	if err != nil {
 		return nil, err
 	}
 	return &Episode{
-		Number:      number,
-		Name:        fields[1],
-		Released:    released,
-		URL:         https(fields[3]),
-		Size:        size,
-		Description: fields[5],
+		Number:         number,
+		Name:           fields[1],
+		Released:       released,
+		URL:            https(fields[3]),
+		Size:           size,
+		RestrictedSize: restrictedSize,
+		Description:    fields[5],
 	}, nil
 }
 
@@ -144,7 +158,7 @@ func Read(r io.Reader) (*Episode, error) {
 func (q *Episode) ReadComments(r io.Reader) error {
 	comments := []Comment{}
 	comment := &Comment{}
-	data, err := ioutil.ReadAll(r)
+	data, err := io.ReadAll(r)
 	if err != nil {
 		return nil
 	}

@@ -1,7 +1,6 @@
 package quiz_test
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -42,7 +41,7 @@ func TestRead(t *testing.T) {
 PodQuiz 42
 Mon, 5 Aug 1974 00:00:00 +0000
 http://mp3.podquiz.com/pq42.mp3
-12345
+12345,6789
 Here is a description.
 It has some lines.
 `
@@ -68,6 +67,9 @@ It has some lines.
 	}
 	if quiz.Size != 12345 {
 		t.Errorf("bad quiz size %d", quiz.Size)
+	}
+	if quiz.RestrictedSize != 6789 {
+		t.Errorf("bad quiz restricted size %d", quiz.Size)
 	}
 	if !strings.Contains(quiz.Description, "some lines") {
 		t.Errorf("bad descriptions %s", quiz.Description)
@@ -118,7 +120,7 @@ This is another test.
 }
 
 func TestAddComment(t *testing.T) {
-	dir, err := ioutil.TempDir("", "pqtest")
+	dir, err := os.MkdirTemp("", "pqtest")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -128,7 +130,7 @@ func TestAddComment(t *testing.T) {
 		t.Fatal(err)
 	}
 	fn := filepath.Join(dir, "42.comments")
-	err = ioutil.WriteFile(fn, []byte("hello\n"), 0644)
+	err = os.WriteFile(fn, []byte("hello\n"), 0644)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -150,7 +152,7 @@ func TestAddComment(t *testing.T) {
 	if q.Comments[0].Author != "fred" {
 		t.Errorf("unexpected name %s", q.Comments[0].Author)
 	}
-	contents, err := ioutil.ReadFile(fn)
+	contents, err := os.ReadFile(fn)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -34,7 +34,8 @@ type DoneTemplateData struct {
 }
 
 type RSSTemplateData struct {
-	LastBuild time.Time
-	ThisYear  int
-	Quizzes   []*quiz.Episode
+	LastBuild  time.Time
+	ThisYear   int
+	Quizzes    []*quiz.Episode
+	Restricted bool
 }

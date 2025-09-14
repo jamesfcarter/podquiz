@@ -1,3 +1,4 @@
+{{- $restricted := .Restricted -}}
 {{xml}}
 <rss version="2.0"
   xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
@@ -29,7 +30,11 @@
       <title>{{.Name}}</title>
       <link>{{.SiteURL true}}</link>
       <description>{{.Description}}</description>
+      {{if $restricted -}}
+      <enclosure url="{{.RestrictedURL}}" length="{{.RestrictedSize}}" type="audio/mpeg"/>
+      {{- else -}}
       <enclosure url="{{.OldURL}}" length="{{.Size}}" type="audio/mpeg"/>
+      {{- end}}
       <pubDate>{{rssTime .Released}}</pubDate>
       <guid isPermaLink="true">{{.GUID}}</guid>
       <itunes:title>{{.Name}}</itunes:title>

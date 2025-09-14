@@ -22,3 +22,13 @@ func (s *Server) RSSFullHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	s.RenderRSS(w, "podquiz.rss", data)
 }
+
+func (s *Server) RSSRestrictedHandler(w http.ResponseWriter, r *http.Request) {
+	data := &RSSTemplateData{
+		LastBuild:  s.Database.Find(s.Database.MostRecent()).Released,
+		ThisYear:   time.Now().Year(),
+		Quizzes:    s.Database.Page(s.Database.MostRecent(), s.Database.Count(1061)),
+		Restricted: true,
+	}
+	s.RenderRSS(w, "podquiz.rss", data)
+}
